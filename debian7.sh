@@ -79,7 +79,7 @@ rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
 wget -O /etc/nginx/nginx.conf "https://raw.github.com/youree82/debian7/master/nginx.conf"
 mkdir -p /home/vps/public_html
-echo "<pre>Modified by Yurissh OpenSource</pre>" > /home/vps/public_html/index.html
+echo "<pre>Modified by Yuri Bhuana</pre>" > /home/vps/public_html/index.html
 echo "<?php phpinfo(); ?>" > /home/vps/public_html/info.php
 wget -O /etc/nginx/conf.d/vps.conf "https://raw.github.com/youree82/debian7/master/vps.conf"
 sed -i 's/listen = \/var\/run\/php5-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool.d/www.conf
@@ -105,12 +105,13 @@ cd /etc/openvpn/
 wget -O /etc/openvpn/1194-client.ovpn "https://raw.github.com/youree82/debian7/master/1194-client.conf"
 sed -i $MYIP2 /etc/openvpn/1194-client.ovpn;
 PASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1`;
-useradd -M -s /bin/false YurisshOS
-echo "YurisshOS:$PASS" | chpasswd
-echo "username" >> pass.txt
-echo "password" >> pass.txt
-tar cf client.tar 1194-client.ovpn pass.txt
-cp client.tar /home/vps/public_html/
+useradd -M -s /bin/false youree82
+echo "youree82:$PASS" | chpasswd
+#echo "username" >> pass.txt
+#echo "password" >> pass.txt
+#tar cf client.tar 1194-client.ovpn pass.txt
+#cp client.tar /home/vps/public_html/
+cp 1194-client.ovpn /home/vps/public_html/
 cd
 
 # install badvpn
@@ -208,13 +209,13 @@ wget -O speedtest_cli.py "https://raw.github.com/youree82/debian7/master/speedte
 wget -O bench-network.sh "https://raw.github.com/youree82/debian7/master/bench-network.sh"
 wget -O ps_mem.py "https://raw.github.com/youree82/debian7/master/ps_mem.py"
 wget -O dropmon "https://raw.github.com/youree82/debian7/master/dropmon.sh"
-wget -O userlogin.sh "https://raw.github.com/youree82/debian7/master/userlogin.sh"
-wget -O userexpired.sh "https://raw.github.com/youree82/debian7/master/userexpired.sh"
+wget -O user-login.sh "https://raw.github.com/youree82/debian7/master/user-login.sh"
+wget -O user-expired.sh "https://raw.github.com/youree82/debian7/master/user-expired.sh"
 #wget -O userlimit.sh "https://raw.github.com/yurisshOS/debian7os/master/userlimit.sh"
-wget -O expire.sh "https://raw.github.com/youree82/debian7/master/expire.sh"
+wget -O user-list.sh "https://raw.github.com/youree82/debian7/master/user-list.sh"
 #wget -O autokill.sh "https://raw.github.com/yurisshOS/debian7os/master/autokill.sh"
 wget -O /etc/issue.net "https://raw.github.com/youree82/debian7/master/banner"
-echo "@reboot root /root/userexpired.sh" > /etc/cron.d/userexpired
+echo "@reboot root /root/user-expired.sh" > /etc/cron.d/user-expired
 #echo "@reboot root /root/userlimit.sh" > /etc/cron.d/userlimit
 echo "0 */6 * * * root /sbin/reboot" > /etc/cron.d/reboot
 echo "* * * * * service dropbear restart" > /etc/cron.d/dropbear
@@ -223,12 +224,12 @@ echo "* * * * * service dropbear restart" > /etc/cron.d/dropbear
 chmod +x bench-network.sh
 chmod +x speedtest_cli.py
 chmod +x ps_mem.py
-chmod +x userlogin.sh
-chmod +x userexpired.sh
+chmod +x user-login.sh
+chmod +x user-expired.sh
 #chmod +x userlimit.sh
 #chmod +x autokill.sh
 chmod +x dropmon
-chmod +x expire.sh
+chmod +x user-list.sh
 
 # finishing
 chown -R www-data:www-data /home/vps/public_html
@@ -256,7 +257,7 @@ echo "-------"  | tee -a log-install.txt
 echo "OpenSSH  : 22, 143"  | tee -a log-install.txt
 echo "Dropbear : 443, 110, 109"  | tee -a log-install.txt
 echo "Squid3    : 80, 8080 (limit to IP SSH)"  | tee -a log-install.txt
-echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/client.tar)"  | tee -a log-install.txt
+echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/1194-client.ovpn)"  | tee -a log-install.txt
 echo "badvpn   : badvpn-udpgw port 7300"  | tee -a log-install.txt
 #echo "PPTP VPN  : Create User via Putty (echo "username pptpd password *" >> /etc/ppp/chap-secrets)"  | tee -a log-install.txt
 echo "nginx    : 81"  | tee -a log-install.txt
@@ -271,11 +272,11 @@ echo "screenfetch"  | tee -a log-install.txt
 echo "./ps_mem.py (Cek RAM)"  | tee -a log-install.txt
 echo "./speedtest_cli.py --share (Speed Test VPS)"  | tee -a log-install.txt
 echo "./bench-network.sh (Cek Kualitas VPS)"  | tee -a log-install.txt
-#echo "./user-login.sh (Monitoring User Login Dropbear, OpenSSH dan PPTP VPN)"  | tee -a log-install.txt
-echo "./user-login.sh (Monitoring User Login)"  | tee -a log-install.txt
+echo "./user-login.sh (Monitoring User Login Dropbear, OpenSSH dan PPTP VPN)"  | tee -a log-install.txt
+#echo "./user-login.sh (Monitoring User Login)"  | tee -a log-install.txt
 echo "./user-expired.sh (Auto Lock User Expire tiap jam 00:00)"  | tee -a log-install.txt
 #echo "./user-limit.sh 2 [ini utk melimit max 2 login]" | tee -a log-install.txt
-echo "./user-list (Melihat Daftar User)"  | tee -a log-install.txt
+echo "./user-list.sh (Melihat Daftar User)"  | tee -a log-install.txt
 echo "sh dropmon [port] contoh: sh dropmon 443" | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "Fitur lain"  | tee -a log-install.txt
