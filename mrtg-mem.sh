@@ -7,5 +7,5 @@ UP=`uptime`
 echo $FREE
 echo $SWAP
 echo $UP
-echo "aemrhabibin.tk"
-
+echo "----------------------------------------------------------------"
+echo "      Script By Yuri Bhuana (fb.com/youree82, 085815002021)     " 
