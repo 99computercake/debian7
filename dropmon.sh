@@ -42,7 +42,7 @@ do
     fi
 done
 echo "---------------------------------------------------------------" 
-echo "                        Script Modified by YurisshOS   " 
+echo "                 Script Modified by Yuri Bhuana                " 
 else
 echo "  Gunakan perintah ./dropmon.sh [port]"
 echo "  contoh : ./dropmon.sh 443"
