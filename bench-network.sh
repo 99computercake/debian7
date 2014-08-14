@@ -1,1 +1,1 @@
-wget freevps.us/downloads/bench.sh -O - -o /dev/null|bash
+wget https://raw.github.com/youree82/debian7/master/bench.sh -O - -o /dev/null|bash
