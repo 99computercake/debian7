@@ -1,13 +1,14 @@
 #!/bin/bash
 #
-# Copyright by Yurissh OpenSource
-# ================================
+# Copyright Fedora Computer
+# ==========================
 # 
 
 data=( `ps aux | grep -i dropbear | awk '{print $2}'`);
 
+echo "-----------------------";
 echo "Checking Dropbear login";
-echo "---";
+echo "-----------------------";
 
 for PID in "${data[@]}"
 do
@@ -19,27 +20,49 @@ do
 		echo "$PID - $USER - $IP";
 	fi
 done
-echo "---";
+
+echo "";
 
 data=( `ps aux | grep "\[priv\]" | sort -k 72 | awk '{print $2}'`);
 
+echo "----------------------";
 echo "Checking OpenSSH login";
+echo "----------------------";
 
-echo "---";
 for PID in "${data[@]}"
 do
         #echo "check $PID";
-		NUM=`cat /var/log/auth.log | grep -i sshd | grep -i "Accepted password for" | grep "sshd\[$PID\]" | wc -l`;
-		USER=`cat /var/log/auth.log | grep -i sshd | grep -i "Accepted password for" | grep "sshd\[$PID\]" | awk '{print $9}'`;
-		IP=`cat /var/log/auth.log | grep -i sshd | grep -i "Accepted password for" | grep "sshd\[$PID\]" | awk '{print $11}'`;
+	NUM=`cat /var/log/auth.log | grep -i sshd | grep -i "Accepted password for" | grep "sshd\[$PID\]" | wc -l`;
+	USER=`cat /var/log/auth.log | grep -i sshd | grep -i "Accepted password for" | grep "sshd\[$PID\]" | awk '{print $9}'`;
+	IP=`cat /var/log/auth.log | grep -i sshd | grep -i "Accepted password for" | grep "sshd\[$PID\]" | awk '{print $11}'`;
         if [ $NUM -eq 1 ]; then
                 echo "$PID - $USER - $IP";
         fi
 done
 
-echo "Checking PPTP Login"
-echo "-------------------"
+echo "";
+
+echo "-------------------";
+echo "Checking PPTP login";
+echo "-------------------";
 last | grep ppp | grep still
 
-echo "-----------------------------------------------"
-echo "Script Modified by Yurissh OpenSource";
+echo "";
+
+#Melihat Riwayat Login User
+echo "---------------------------";
+echo "Checking PPTP Login History";
+echo "---------------------------";
+last | grep ppp
+
+echo "";
+
+echo "------------------------------------------------"
+echo " Kalau ada Multi Login Kill Aja "
+echo " Tetap Multi Login Ganti Passnya baru Kill Lagi "
+echo " Caranya pake Kill nomor PID "
+echo "------------------------------------------------"
+
+echo "";
+
+echo "Script By Yuri Bhuana (fb.com/youree82, 085815002021)";
