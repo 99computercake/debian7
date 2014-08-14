@@ -5,7 +5,7 @@ log=/var/log/auth.log
 loginsukses='Password auth succeeded'
 echo ' '
 echo ' '
-echo "               Dropbear Users Login Monitor "
+echo "               DropBear Users Login Monitor "
 echo "---------------------------------------------------------------"
 echo "  Date-time    |  PID      |  User Name      |  From Host " 
 echo "---------------------------------------------------------------" 
@@ -41,8 +41,8 @@ do
        echo "  $waktu|  $PID | $user|  $fromip "
     fi
 done
-echo "---------------------------------------------------------------" 
-echo "                 Script Modified by Yuri Bhuana                " 
+echo "----------------------------------------------------------------" 
+echo "      Script By Yuri Bhuana (fb.com/youree82, 085815002021)     " 
 else
 echo "  Gunakan perintah ./dropmon.sh [port]"
 echo "  contoh : ./dropmon.sh 443"
