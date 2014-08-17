@@ -212,7 +212,7 @@ wget -O user-expired.sh "https://raw.github.com/youree82/debian7/master/user-exp
 wget -O user-list.sh "https://raw.github.com/youree82/debian7/master/user-list.sh"
 #wget -O autokill.sh "https://raw.github.com/yurisshOS/debian7os/master/autokill.sh"
 wget -O /etc/issue.net "https://raw.github.com/youree82/debian7/master/banner"
-echo "@reboot root /root/user-expired.sh" > /etc/cron.d/user-expired
+echo "0 0 * * * root /root/user-expired.sh" > /etc/cron.d/user-expired
 #echo "@reboot root /root/userlimit.sh" > /etc/cron.d/userlimit
 echo "0 */6 * * * root /sbin/reboot" > /etc/cron.d/reboot
 echo "* * * * * service dropbear restart" > /etc/cron.d/dropbear
