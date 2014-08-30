@@ -193,10 +193,11 @@ service squid3 restart
 
 # install webmin
 cd
-wget https://www.dropbox.com/s/9vbc213hm4lnlkc/webmin_1.690_all.deb
-dpkg -i --force-all webmin_1.690_all.deb;
+#wget https://www.dropbox.com/s/9vbc213hm4lnlkc/webmin_1.690_all.deb
+wget -O webmin-current.deb "http://www.webmin.com/download/deb/webmin-current.deb"
+dpkg -i --force-all webmin-current.deb;
 apt-get -y -f install;
-rm /root/webmin_1.690_all.deb
+rm /root/webmin-current.deb
 service webmin restart
 service vnstat restart
 
@@ -214,7 +215,7 @@ wget -O user-list.sh "https://raw.github.com/youree82/debian7/master/user-list.s
 wget -O /etc/issue.net "https://raw.github.com/youree82/debian7/master/banner"
 echo "0 0 * * * root /root/user-expired.sh" > /etc/cron.d/user-expired
 #echo "@reboot root /root/userlimit.sh" > /etc/cron.d/userlimit
-echo "0 */6 * * * root /sbin/reboot" > /etc/cron.d/reboot
+echo "0 */12 * * * root /sbin/reboot" > /etc/cron.d/reboot
 echo "* * * * * service dropbear restart" > /etc/cron.d/dropbear
 #echo "@reboot root /root/autokill.sh" > /etc/cron.d/autokill
 #sed -i '$ i\screen -AmdS check /root/autokill.sh' /etc/rc.local
