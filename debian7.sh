@@ -202,9 +202,9 @@ service webmin restart
 service vnstat restart
 
 # install pptp vpn
-#wget http://repo.vpsmurahmeriah.com/pptpinstall.sh
-#chmod +x pptpinstall.sh
-#./pptpinstall.sh
+wget https://github.com/youree82/debian7/raw/master/pptpinstall.sh
+chmod +x pptpinstall.sh
+./pptpinstall.sh
 
 # download script
 cd
@@ -262,7 +262,7 @@ echo "Dropbear : 443, 110, 109"  | tee -a log-install.txt
 echo "Squid3    : 80, 8080 (limit to IP SSH)"  | tee -a log-install.txt
 echo "OpenVPN  : TCP 1194 (client config : http://$MYIP:81/1194-client.ovpn)"  | tee -a log-install.txt
 echo "badvpn   : badvpn-udpgw port 7300"  | tee -a log-install.txt
-#echo "PPTP VPN  : Create User via Putty (echo "username pptpd password *" >> /etc/ppp/chap-secrets)"  | tee -a log-install.txt
+echo "PPTP VPN  : Create User via Putty (echo "username pptpd password *" >> /etc/ppp/chap-secrets)"  | tee -a log-install.txt
 echo "nginx    : 81"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "Tools"  | tee -a log-install.txt
