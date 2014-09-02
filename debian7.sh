@@ -201,6 +201,11 @@ rm /root/webmin-current.deb
 service webmin restart
 service vnstat restart
 
+# install pptp vpn
+#wget http://repo.vpsmurahmeriah.com/pptpinstall.sh
+#chmod +x pptpinstall.sh
+#./pptpinstall.sh
+
 # download script
 cd
 wget -O speedtest_cli.py "https://raw.github.com/youree82/debian7/master/speedtest_cli.py"
