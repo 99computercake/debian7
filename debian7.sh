@@ -28,7 +28,7 @@ sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 service ssh restart
 
 # set repo
-wget -O /etc/apt/sources.list "https://raw.github.com/youree82/debian7/master/sources.list.debian7"
+wget -O /etc/apt/sources.list "https://github.com/youree82/debian7/raw/master/sources.list.debian7"
 wget "http://www.dotdeb.org/dotdeb.gpg"
 wget "http://www.webmin.com/jcameron-key.asc"
 cat dotdeb.gpg | apt-key add -;rm dotdeb.gpg
@@ -64,7 +64,7 @@ service vnstat restart
 
 # install screenfetch
 cd
-wget 'https://raw.github.com/youree82/debian7/master/screenfetch-dev'
+wget 'https://github.com/youree82/debian7/raw/master/screenfetch-dev'
 mv screenfetch-dev /usr/bin/screenfetch-dev
 chmod +x /usr/bin/screenfetch-dev
 echo "clear" >> .profile
@@ -74,11 +74,11 @@ echo "screenfetch-dev" >> .profile
 cd
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "https://raw.github.com/youree82/debian7/master/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://github.com/youree82/debian7/raw/master/nginx.conf"
 mkdir -p /home/vps/public_html
 echo "<pre>Modified by Yuri Bhuana</pre>" > /home/vps/public_html/index.html
 echo "<?php phpinfo(); ?>" > /home/vps/public_html/info.php
-wget -O /etc/nginx/conf.d/vps.conf "https://raw.github.com/youree82/debian7/master/vps.conf"
+wget -O /etc/nginx/conf.d/vps.conf "https://github.com/youree82/debian7/raw/master/vps.conf"
 sed -i 's/listen = \/var\/run\/php5-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool.d/www.conf
 service php5-fpm restart
 service nginx restart
@@ -87,11 +87,11 @@ service nginx restart
 wget -O /etc/openvpn/openvpn.tar "https://www.dropbox.com/s/1bgtsp34vpb4psq/openvpn-debian.tar"
 cd /etc/openvpn/
 tar xf openvpn.tar
-wget -O /etc/openvpn/1194.conf "https://raw.github.com/youree82/debian7/master/1194.conf"
+wget -O /etc/openvpn/1194.conf "https://github.com/youree82/debian7/raw/master/1194.conf"
 service openvpn restart
 sysctl -w net.ipv4.ip_forward=1
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
-wget -O /etc/iptables.up.rules "https://raw.github.com/youree82/debian7/master/iptables.up.rules"
+wget -O /etc/iptables.up.rules "https://github.com/youree82/debian7/raw/master/iptables.up.rules"
 sed -i '$ i\iptables-restore < /etc/iptables.up.rules' /etc/rc.local
 sed -i $MYIP2 /etc/iptables.up.rules;
 iptables-restore < /etc/iptables.up.rules
@@ -99,7 +99,7 @@ service openvpn restart
 
 # configure openvpn client config
 cd /etc/openvpn/
-wget -O /etc/openvpn/1194-client.ovpn "https://raw.github.com/youree82/debian7/master/1194-client.conf"
+wget -O /etc/openvpn/1194-client.ovpn "https://github.com/youree82/debian7/raw/master/1194-client.conf"
 sed -i $MYIP2 /etc/openvpn/1194-client.ovpn;
 PASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1`;
 useradd -M -s /bin/false youree82
@@ -122,8 +122,8 @@ screen -AmdS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300
 
 
 # install mrtg
-wget -O /etc/snmp/snmpd.conf "https://raw.github.com/youree82/debian7/master/snmpd.conf"
-wget -O /root/mrtg-mem.sh "https://raw.github.com/youree82/debian7/master/mrtg-mem.sh"
+wget -O /etc/snmp/snmpd.conf "https://github.com/youree82/debian7/raw/master/snmpd.conf"
+wget -O /root/mrtg-mem.sh "https://github.com/youree82/debian7/raw/master/mrtg-mem.sh"
 chmod +x /root/mrtg-mem.sh
 cd /etc/snmp/
 sed -i 's/TRAPDRUN=no/TRAPDRUN=yes/g' /etc/default/snmpd
@@ -131,7 +131,7 @@ service snmpd restart
 snmpwalk -v 1 -c public localhost 1.3.6.1.4.1.2021.10.1.3.1
 mkdir -p /home/vps/public_html/mrtg
 cfgmaker --zero-speed 100000000 --global 'WorkDir: /home/vps/public_html/mrtg' --output /etc/mrtg.cfg public@localhost
-curl "https://raw.github.com/youree82/debian7/master/mrtg.conf" >> /etc/mrtg.cfg
+curl "https://github.com/youree82/debian7/raw/master/mrtg.conf" >> /etc/mrtg.cfg
 sed -i 's/WorkDir: \/var\/www\/mrtg/# WorkDir: \/var\/www\/mrtg/g' /etc/mrtg.cfg
 sed -i 's/# Options\[_\]: growright, bits/Options\[_\]: growright/g' /etc/mrtg.cfg
 indexmaker --output=/home/vps/public_html/mrtg/index.html /etc/mrtg.cfg
@@ -187,7 +187,7 @@ apt-get -y install fail2ban;service fail2ban restart
 
 # install squid3
 apt-get -y install squid3
-wget -O /etc/squid3/squid.conf "https://raw.github.com/youree82/debian7/master/squid3.conf"
+wget -O /etc/squid3/squid.conf "https://github.com/youree82/debian7/raw/master/squid3.conf"
 sed -i $MYIP2 /etc/squid3/squid.conf;
 service squid3 restart
 
@@ -208,16 +208,16 @@ service vnstat restart
 
 # download script
 cd
-wget -O speedtest_cli.py "https://raw.github.com/youree82/debian7/master/speedtest_cli.py"
-wget -O bench-network.sh "https://raw.github.com/youree82/debian7/master/bench-network.sh"
-wget -O ps_mem.py "https://raw.github.com/youree82/debian7/master/ps_mem.py"
-wget -O dropmon "https://raw.github.com/youree82/debian7/master/dropmon.sh"
-wget -O user-login.sh "https://raw.github.com/youree82/debian7/master/user-login.sh"
-wget -O user-expired.sh "https://raw.github.com/youree82/debian7/master/user-expired.sh"
+wget -O speedtest_cli.py "https://github.com/youree82/debian7/raw/master/speedtest_cli.py"
+wget -O bench-network.sh "https://github.com/youree82/debian7/raw/master/bench-network.sh"
+wget -O ps_mem.py "https://github.com/youree82/debian7/raw/master/ps_mem.py"
+wget -O dropmon "https://github.com/youree82/debian7/raw/master/dropmon.sh"
+wget -O user-login.sh "https://github.com/youree82/debian7/raw/master/user-login.sh"
+wget -O user-expired.sh "https://github.com/youree82/debian7/raw/master/user-expired.sh"
 #wget -O userlimit.sh "https://raw.github.com/yurisshOS/debian7os/master/userlimit.sh"
-wget -O user-list.sh "https://raw.github.com/youree82/debian7/master/user-list.sh"
+wget -O user-list.sh "https://github.com/youree82/debian7/raw/master/user-list.sh"
 #wget -O autokill.sh "https://raw.github.com/yurisshOS/debian7os/master/autokill.sh"
-wget -O /etc/issue.net "https://raw.github.com/youree82/debian7/master/banner"
+wget -O /etc/issue.net "https://github.com/youree82/debian7/raw/master/banner"
 echo "0 0 * * * root /root/user-expired.sh" > /etc/cron.d/user-expired
 #echo "@reboot root /root/userlimit.sh" > /etc/cron.d/userlimit
 echo "0 */12 * * * root /sbin/reboot" > /etc/cron.d/reboot
