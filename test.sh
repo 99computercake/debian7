@@ -12,3 +12,17 @@ MYIP2="s/xxxxxxxxx/$MYIP/g";
 
 echo "MYIP = $MYIP"
 echo "MYIP2 = $MYIP2"
+
+
+#=========
+IP=$(ifconfig | grep 'inet addr:' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | cut -d: -f2 | awk '{ print $1}' | head -1)
+if [ "$IP" = "" ]; then
+		IP2=$(wget -qO- ipv4.icanhazip.com)
+fi
+
+echo "IP = $IP"
+echo "IP2 = $IP2"
+
+cd
+
+rm -f /root/test.sh
