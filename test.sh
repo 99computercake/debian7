@@ -10,16 +10,17 @@ MYIP2="s/xxxxxxxxx/$MYIP/g";
 #        ether=eth0
 #fi
 
-echo "MYIP = $MYIP"
-echo "MYIP2 = $MYIP2"
+echo "OS = $OS";
+echo "MYIP = $MYIP";
+echo "MYIP2 = $MYIP2";
 
 
 #=========
-IP=$(ifconfig | grep 'inet addr:' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | cut -d: -f2 | awk '{ print $1}' | head -1)
-IP2=$(wget -qO- ipv4.icanhazip.com)
+IP=$(ifconfig | grep 'inet addr:' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | cut -d: -f2 | awk '{ print $1}' | head -1);
+IP2=$(wget -qO- ipv4.icanhazip.com);
 
-echo "IP = $IP"
-echo "IP2 = $IP2"
+echo "IP = $IP";
+echo "IP2 = $IP2";
 
 cd
 
