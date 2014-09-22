@@ -109,9 +109,9 @@ service nginx restart
 #cd /etc/openvpn/
 #wget -O /etc/openvpn/1194-client.ovpn "https://github.com/youree82/debian7/raw/master/1194-client.conf"
 #sed -i $MYIP2 /etc/openvpn/1194-client.ovpn;
-#PASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1`;
-#useradd -M -s /bin/false youree82
-#echo "youree82:$PASS" | chpasswd
+PASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1`;
+useradd -M -s /bin/false youree82
+echo "youree82:$PASS" | chpasswd
 #echo "username" >> pass.txt
 #echo "password" >> pass.txt
 #tar cf client.tar 1194-client.ovpn pass.txt
